@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>📝 ToDoリスト</title>
+    <link rel="stylesheet" href="{{ url_for('static', path='/style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📝 ToDoリスト</h1>
+            <p>シンプルなタスク管理アプリ</p>
+        </header>
+
+        <!-- ToDo追加フォーム -->
+        <section class="add-todo-section">
+            <h2>新しいToDoを追加</h2>
+            <form action="/add" method="post" class="add-todo-form">
+                <div class="form-group">
+                    <input 
+                        type="text" 
+                        name="title" 
+                        placeholder="ToDoのタイトルを入力してください..." 
+                        required 
+                        maxlength="200"
+                        class="todo-input"
+                    >
+                    <button type="submit" class="add-btn">追加</button>
+                </div>
+            </form>
+        </section>
+
+        <!-- ToDo一覧表示 -->
+        <section class="todo-list-section">
+            <h2>ToDoリスト ({{ todos|length }} 件)</h2>
+            
+            {% if todos %}
+                <ul class="todo-list">
+                    {% for todo in todos %}
+                    <li class="todo-item">
+                        <div class="todo-content">
+                            <span class="todo-id">#{{ todo.id }}</span>
+                            <span class="todo-title">{{ todo.title }}</span>
+                        </div>
+                        <form action="/delete/{{ todo.id }}" method="post" class="delete-form">
+                            <button type="submit" class="delete-btn" onclick="return confirm('「{{ todo.title }}」を削除しますか？')">
+                                🗑️ 削除
+                            </button>
+                        </form>
+                    </li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <div class="empty-state">
+                    <p>📭 ToDoがありません</p>
+                    <p>上のフォームから新しいToDoを追加してください！</p>
+                </div>
+            {% endif %}
+        </section>
+
+        <footer>
+            <p>FastAPI + SQLAlchemy + Jinja2 で構築</p>
+        </footer>
+    </div>
+</body>
+</html>
