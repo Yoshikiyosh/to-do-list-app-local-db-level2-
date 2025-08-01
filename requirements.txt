@@ -6,7 +6,6 @@ uvicorn[standard]==0.30.1
 
 # データベース関連
 sqlalchemy==2.0.30
-sqlite3
 
 # テンプレート関連
 jinja2==3.1.4
