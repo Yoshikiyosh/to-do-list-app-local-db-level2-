@@ -22,7 +22,3 @@ def delete_todo(db: Session, todo_id: int):
         db.commit()
         return True
     return False
-
-def get_todo_by_id(db: Session, todo_id: int):
-    """指定されたIDのToDoを取得"""
-    return db.query(models.ToDo).filter(models.ToDo.id == todo_id).first()
